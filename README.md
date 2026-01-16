@@ -30,6 +30,9 @@ DocQACase/
 ├── requirements.txt           # Project Dependencies
 └── README.md                  # Documentation
 
+
+```
+
 ## Installation & Setup
 1. Prerequisites:
 - Python 3.8 or higher.
