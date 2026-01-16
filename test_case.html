@@ -1,0 +1,395 @@
+
+    <html>
+    <head>
+        <title>DocQA Engine - Custom Test Case Management </title>
+        <style>
+            body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 40px; background-color: #f4f4f9; }
+            h1 { color: #333; }
+            .summary-box { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 30px; display: flex; gap: 40px; }
+            .stat { text-align: center; }
+            .stat-number { font-size: 24px; font-weight: bold; color: #2c3e50; }
+            .stat-label { font-size: 14px; color: #7f8c8d; text-transform: uppercase; }
+            
+            table { border-collapse: collapse; width: 100%; box-shadow: 0 2px 15px rgba(0,0,0,0.1); background: white; border-radius: 8px; overflow: hidden; }
+            th { background-color: #009879; color: #ffffff; text-align: left; padding: 12px 15px; }
+            td { padding: 12px 15px; border-bottom: 1px solid #dddddd; }
+            tr:nth-of-type(even) { background-color: #f3f3f3; }
+            tr:last-of-type { border-bottom: 2px solid #009879; }
+            
+            /* Warna khusus untuk Risk Level */
+            td:nth-child(2) { font-weight: bold; }
+        </style>
+    </head>
+    <body>
+        <h1>DocQA Report</h1>
+        <p>Generated on: 2026-01-16 13:50:23</p>
+        
+        <div class="summary-box">
+            <div class="stat">
+                <div class="stat-number">42</div>
+                <div class="stat-label">Total Scenarios</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number" style="color: #e74c3c;">8</div>
+                <div class="stat-label">Critical Risks</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number" style="color: #f39c12;">41</div>
+                <div class="stat-label">Pending Review</div>
+            </div>
+        </div>
+
+        <table class="dataframe table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Feature ID</th>
+      <th>Risk Level</th>
+      <th>Status</th>
+      <th>Test Scenario</th>
+      <th>Expected Result</th>
+      <th>QA Reviewer</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>US-03-CC</td>
+      <td>CRITICAL</td>
+      <td>Approved</td>
+      <td>(Positive) [BVA] Verify Card Number (Visa/MC/Amex) accepts minimum valid length (15 chars)</td>
+      <td>System accepts the input successfully.</td>
+      <td>bella</td>
+    </tr>
+    <tr>
+      <td>US-03-CC</td>
+      <td>CRITICAL</td>
+      <td>Pending</td>
+      <td>(Positive) [BVA] Verify Card Number (Visa/MC/Amex) accepts maximum valid length (16 chars)</td>
+      <td>System accepts the input successfully.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-03-CC</td>
+      <td>CRITICAL</td>
+      <td>Pending</td>
+      <td>(Negative) [BVA] Verify Card Number (Visa/MC/Amex) rejects input below minimum (14 chars)</td>
+      <td>System shows validation error: 'Minimum length is 15'.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-03-CC</td>
+      <td>CRITICAL</td>
+      <td>Pending</td>
+      <td>(Negative) [BVA] Verify Card Number (Visa/MC/Amex) rejects input above maximum (17 chars)</td>
+      <td>System shows validation error: 'Maximum length is 16'.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-03-SWIFT</td>
+      <td>CRITICAL</td>
+      <td>Pending</td>
+      <td>(Positive) [BVA] Verify SWIFT/BIC Code accepts minimum valid length (8 chars)</td>
+      <td>System accepts the input successfully.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-03-SWIFT</td>
+      <td>CRITICAL</td>
+      <td>Pending</td>
+      <td>(Positive) [BVA] Verify SWIFT/BIC Code accepts maximum valid length (11 chars)</td>
+      <td>System accepts the input successfully.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-03-SWIFT</td>
+      <td>CRITICAL</td>
+      <td>Pending</td>
+      <td>(Negative) [BVA] Verify SWIFT/BIC Code rejects input below minimum (7 chars)</td>
+      <td>System shows validation error: 'Minimum length is 8'.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-03-SWIFT</td>
+      <td>CRITICAL</td>
+      <td>Pending</td>
+      <td>(Negative) [BVA] Verify SWIFT/BIC Code rejects input above maximum (12 chars)</td>
+      <td>System shows validation error: 'Maximum length is 11'.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-03-CC</td>
+      <td>HIGH</td>
+      <td>Pending</td>
+      <td>(Negative) [Edge] Verify Card Number (Visa/MC/Amex) rejects Special Characters/Symbols</td>
+      <td>System rejects non-alphanumeric input.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-03-SWIFT</td>
+      <td>HIGH</td>
+      <td>Pending</td>
+      <td>(Negative) [Edge] Verify SWIFT/BIC Code rejects Special Characters/Symbols</td>
+      <td>System rejects non-alphanumeric input.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-03-CRYPTO</td>
+      <td>HIGH</td>
+      <td>Pending</td>
+      <td>(Positive) [BVA] Verify Wallet Address accepts minimum valid length (30 chars)</td>
+      <td>System accepts the input successfully.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-03-CRYPTO</td>
+      <td>HIGH</td>
+      <td>Pending</td>
+      <td>(Positive) [BVA] Verify Wallet Address accepts maximum valid length (42 chars)</td>
+      <td>System accepts the input successfully.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-03-CRYPTO</td>
+      <td>HIGH</td>
+      <td>Pending</td>
+      <td>(Negative) [BVA] Verify Wallet Address rejects input below minimum (29 chars)</td>
+      <td>System shows validation error: 'Minimum length is 30'.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-03-CRYPTO</td>
+      <td>HIGH</td>
+      <td>Pending</td>
+      <td>(Negative) [BVA] Verify Wallet Address rejects input above maximum (43 chars)</td>
+      <td>System shows validation error: 'Maximum length is 42'.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-03-PAYPAL</td>
+      <td>HIGH</td>
+      <td>Pending</td>
+      <td>(Positive) [Flow] Verify Standard Success Flow: Payment - PayPal Redirection</td>
+      <td>System directs user to the correct page/generates correct data.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-03-PAYPAL</td>
+      <td>HIGH</td>
+      <td>Pending</td>
+      <td>(Negative) [Edge] Verify handling of Timeout/API Error for Payment - PayPal Redirection</td>
+      <td>System handles error gracefully (Show 'Retry' button, do not crash).</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-03-WISE</td>
+      <td>HIGH</td>
+      <td>Pending</td>
+      <td>(Negative) [Edge] Verify handling of Timeout/API Error for Payment - Wise Integration</td>
+      <td>System handles error gracefully (Show 'Retry' button, do not crash).</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-03-WU</td>
+      <td>HIGH</td>
+      <td>Pending</td>
+      <td>(Negative) [Edge] Verify handling of Timeout/API Error for Payment - Western Union</td>
+      <td>System handles error gracefully (Show 'Retry' button, do not crash).</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-03-REMIT</td>
+      <td>HIGH</td>
+      <td>Pending</td>
+      <td>(Negative) [Edge] Verify handling of Timeout/API Error for Payment - Remittance Bank</td>
+      <td>System handles error gracefully (Show 'Retry' button, do not crash).</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-03-C</td>
+      <td>HIGH</td>
+      <td>Pending</td>
+      <td>(Positive) [Flow] Verify Standard Success Flow: Global Payment - New Card Verification</td>
+      <td>System directs user to the correct page/generates correct data.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-03-C</td>
+      <td>HIGH</td>
+      <td>Pending</td>
+      <td>(Negative) [Edge] Verify handling of Timeout/API Error for Global Payment - New Card Verification</td>
+      <td>System handles error gracefully (Show 'Retry' button, do not crash).</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-04-A</td>
+      <td>HIGH</td>
+      <td>Pending</td>
+      <td>(Positive) [Logic] Verify 'Enable 'Use Points' Checkbox' is ALLOWED when Total_Order_Balance &gt; 0 is TRUE</td>
+      <td>Action proceeds successfully / Button is Enabled.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-04-A</td>
+      <td>HIGH</td>
+      <td>Pending</td>
+      <td>(Negative) [Logic] Verify 'Enable 'Use Points' Checkbox' is BLOCKED when Total_Order_Balance &gt; 0 is FALSE</td>
+      <td>Action is blocked / Button is Disabled / Error message shown.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-04-B</td>
+      <td>HIGH</td>
+      <td>Pending</td>
+      <td>(Positive) [BVA] Verify Coupon Code accepts minimum valid length (6 chars)</td>
+      <td>System accepts the input successfully.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-04-B</td>
+      <td>HIGH</td>
+      <td>Pending</td>
+      <td>(Positive) [BVA] Verify Coupon Code accepts maximum valid length (15 chars)</td>
+      <td>System accepts the input successfully.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-04-B</td>
+      <td>HIGH</td>
+      <td>Pending</td>
+      <td>(Negative) [BVA] Verify Coupon Code rejects input below minimum (5 chars)</td>
+      <td>System shows validation error: 'Minimum length is 6'.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-04-B</td>
+      <td>HIGH</td>
+      <td>Pending</td>
+      <td>(Negative) [BVA] Verify Coupon Code rejects input above maximum (16 chars)</td>
+      <td>System shows validation error: 'Maximum length is 15'.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-04-STACK</td>
+      <td>HIGH</td>
+      <td>Pending</td>
+      <td>(Positive) [Logic] Verify 'Apply Points on top of Coupon' is ALLOWED when Selected_Coupon_Is_Stackable == TRUE is TRUE</td>
+      <td>Action proceeds successfully / Button is Enabled.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-04-STACK</td>
+      <td>HIGH</td>
+      <td>Pending</td>
+      <td>(Negative) [Logic] Verify 'Apply Points on top of Coupon' is BLOCKED when Selected_Coupon_Is_Stackable == TRUE is FALSE</td>
+      <td>Action is blocked / Button is Disabled / Error message shown.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-01</td>
+      <td>MEDIUM</td>
+      <td>Pending</td>
+      <td>(Positive) [Logic] Verify 'Click Checkout Button' is ALLOWED when Selected_Items &gt; 0 is TRUE</td>
+      <td>Action proceeds successfully / Button is Enabled.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-01</td>
+      <td>MEDIUM</td>
+      <td>Pending</td>
+      <td>(Negative) [Logic] Verify 'Click Checkout Button' is BLOCKED when Selected_Items &gt; 0 is FALSE</td>
+      <td>Action is blocked / Button is Disabled / Error message shown.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-03-CC</td>
+      <td>MEDIUM</td>
+      <td>Pending</td>
+      <td>(Negative) [Edge] Verify Card Number (Visa/MC/Amex) handling of Empty/Blank input</td>
+      <td>System shows 'Required Field' error.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-03-SWIFT</td>
+      <td>MEDIUM</td>
+      <td>Pending</td>
+      <td>(Negative) [Edge] Verify SWIFT/BIC Code handling of Empty/Blank input</td>
+      <td>System shows 'Required Field' error.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-03-CRYPTO</td>
+      <td>MEDIUM</td>
+      <td>Pending</td>
+      <td>(Negative) [Edge] Verify Wallet Address handling of Empty/Blank input</td>
+      <td>System shows 'Required Field' error.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-03-WISE</td>
+      <td>MEDIUM</td>
+      <td>Pending</td>
+      <td>(Positive) [Flow] Verify Standard Success Flow: Payment - Wise Integration</td>
+      <td>System directs user to the correct page/generates correct data.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-03-WU</td>
+      <td>MEDIUM</td>
+      <td>Pending</td>
+      <td>(Positive) [Flow] Verify Standard Success Flow: Payment - Western Union</td>
+      <td>System directs user to the correct page/generates correct data.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-03-REMIT</td>
+      <td>MEDIUM</td>
+      <td>Pending</td>
+      <td>(Positive) [Flow] Verify Standard Success Flow: Payment - Remittance Bank</td>
+      <td>System directs user to the correct page/generates correct data.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-04-B</td>
+      <td>MEDIUM</td>
+      <td>Pending</td>
+      <td>(Negative) [Edge] Verify Coupon Code handling of Empty/Blank input</td>
+      <td>System shows 'Required Field' error.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-05</td>
+      <td>MEDIUM</td>
+      <td>Pending</td>
+      <td>(Positive) [Logic] Verify 'Click Final Confirm Button' is ALLOWED when Precautions_Checkbox == CHECKED is TRUE</td>
+      <td>Action proceeds successfully / Button is Enabled.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-05</td>
+      <td>MEDIUM</td>
+      <td>Pending</td>
+      <td>(Negative) [Logic] Verify 'Click Final Confirm Button' is BLOCKED when Precautions_Checkbox == CHECKED is FALSE</td>
+      <td>Action is blocked / Button is Disabled / Error message shown.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-02</td>
+      <td>LOW</td>
+      <td>Pending</td>
+      <td>(Positive) [Logic] Verify 'View Cart Page' is ALLOWED when Cart_Item_Count == 0 is TRUE</td>
+      <td>Action proceeds successfully / Button is Enabled.</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>US-02</td>
+      <td>LOW</td>
+      <td>Pending</td>
+      <td>(Negative) [Logic] Verify 'View Cart Page' is BLOCKED when Cart_Item_Count == 0 is FALSE</td>
+      <td>Action is blocked / Button is Disabled / Error message shown.</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+        
+    </body>
+    </html>
+    
