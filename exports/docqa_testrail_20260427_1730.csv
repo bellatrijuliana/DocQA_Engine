@@ -1,0 +1,34 @@
+Title,Section,Type,Priority,Estimate,References,Preconditions,Steps,Expected Result,Custom (Risk Level),Custom (Risk Score),Custom (Risk Reasoning)
+Negative - Invalid Password,user login,Functional,3 - Medium,,,"Invalid password (e.g., too short, too long, contains special characters)","Enter invalid password: password1234
+Click 'Login' button.
+Verify an error message is displayed indicating invalid password.
+Check for appropriate error handling.",An error message is displayed indicating invalid password.,Medium,9,Password complexity is critical; failure could compromise account security.
+Concurrent Login - Attempt to Login with Same Password,user login,Functional,3 - Medium,,,Multiple users attempting to login with the same password.,"Enter password: password123
+Attempt to login with the same password as another user.
+Verify the system prevents login and displays an error.
+Check for appropriate error handling.",The system prevents login and displays an error message indicating duplicate password.,Medium,9,Potential for security vulnerabilities if duplicate passwords are not handled correctly.
+Positive - Invalid Email Format,user login,Functional,4 - Low,,,"Invalid email format (e.g., missing @ or domain)","Enter invalid email address: test@example.com (missing @ or domain)
+Click 'Login' button.
+Verify an error message is displayed indicating invalid email format.
+Check for appropriate error handling.",An error message is displayed indicating the email format is invalid.,Low,2,Invalid email format could lead to security vulnerabilities or incorrect user data.
+Positive - Successful Login,user login,Functional,4 - Low,,,"User is valid, valid email and password.","Enter valid email address: test@example.com
+Enter valid password: password123
+Click 'Login' button.
+Verify successful login with user profile displayed.
+Check for correct user profile displayed.",User is successfully logged in and redirected to the user's dashboard.,Low,1,Successful login is a core functionality; failure could lead to unauthorized access.
+Negative - Empty Email,user login,Functional,4 - Low,,,Empty email address.,"Enter empty email address:  
+Click 'Login' button.
+Verify an error message is displayed indicating the email is required.
+Check for appropriate error handling.",An error message is displayed indicating the email is required.,Low,1,Missing email address is a critical requirement; failure could prevent login.
+Boundary - Minimum Password Length,user login,Functional,4 - Low,,,Password length is less than 8 characters.,"Enter minimum password length: 6
+Click 'Login' button.
+Verify the login process is completed successfully.
+Check for appropriate error handling.",Login proceeds successfully with the minimum password length.,Low,1,Ensuring the system handles short passwords gracefully.
+Boundary - Maximum Password Length,user login,Functional,4 - Low,,,Password length is greater than 32 characters.,"Enter maximum password length: 32
+Click 'Login' button.
+Verify the login process is completed successfully.
+Check for appropriate error handling.",Login proceeds successfully with the maximum password length.,Low,1,Ensuring the system handles long passwords gracefully.
+Edge Case - Invalid Email Domain,user login,Functional,4 - Low,,,"Invalid email domain (e.g., missing @)","Enter invalid email address: test@example.com (missing @)
+Click 'Login' button.
+Verify an error message is displayed indicating invalid email format.
+Check for appropriate error handling.",An error message is displayed indicating invalid email format.,Low,1,Invalid email domain could lead to incorrect user data.

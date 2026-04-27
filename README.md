@@ -1,74 +1,153 @@
-# DocQA Case Engine Ver 1.0
+# DocQA Case Engine v2.0
 
-**DocQA Case** is a lightweight, data-driven QA automation framework designed to bridge the gap between manual testing and full automation. It leverages Python and SQLite to generate, validate, and report test scenarios based on business requirements.
+Upgrade dari v1.0 dengan integrasi **LLM lokal (Ollama)** dan **Risk-Based Testing**.
 
-Instead of manually writing thousands of test cases in spreadsheets, this engine automates the logic generation (BVA, Edge Cases, Dependency Checks) while keeping a "Human-in-the-Loop" for quality assurance.
+---
 
-## Key Features
+## Yang Baru di v2.0
 
-* **Instant Auto-Generation:** Transforms a single User Story into dozens of robust test cases (Positive, Negative, Boundary Values) in milliseconds.
-* **Quality Curator Interface:** An interactive CLI that allows QA Engineers to review, approve, or reject generated scenarios before they enter the database.
-* **Risk-Based Reporting:** Generates professional HTML dashboards that prioritize Critical and High-risk features for stakeholders.
-* **Centralized Data:** Uses SQLite for structured, queryable, and scalable test case management (replacing flat Excel files).
+| Fitur | v1.0 | v2.0 |
+|---|---|---|
+| Generate test case | Manual (requirements_data.py) | **Auto dari raw input teks via LLM** |
+| Risk assessment | Manual / static | **LLM menilai probability & impact** |
+| Risk-based expansion | ❌ | **LLM generate test case tambahan di area High/Critical** |
+| Input interface | CLI saja | **CLI + Web UI** |
+| LLM engine | ❌ | **Ollama (local, model-agnostic)** |
 
-## Project Structure
+---
 
-```text
+## Prerequisites
+
+1. **Python 3.8+**
+2. **Ollama** — install dari [https://ollama.ai](https://ollama.ai)
+3. Pull model pilihan:
+   ```bash
+   ollama pull llama3.2   # Rekomendasi
+   # atau
+   ollama pull mistral
+   # atau
+   ollama pull gemma3
+   ```
+4. Jalankan Ollama:
+   ```bash
+   ollama serve
+   ```
+
+---
+
+## Konfigurasi
+
+Edit `src/config.py`:
+```python
+OLLAMA_MODEL = "llama3.2"     # Ganti sesuai model yang kamu pull
+OLLAMA_TIMEOUT = 120           # Naikkan jika model lambat
+```
+
+---
+
+## Instalasi
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## Workflow v2.0
+
+### Step 1 — Inisialisasi Database
+```bash
+python src/setup_db.py
+```
+
+### Step 2 — Input Requirements via CLI
+```bash
+python src/llm_intake.py
+```
+Paste requirements/user story kamu → LLM langsung generate test cases + risk assessment awal.
+
+### Step 3 — Risk Engine (opsional tapi direkomendasikan)
+```bash
+python src/risk_engine.py
+```
+Pilih:
+- **Option 1**: LLM re-assess risk semua test case
+- **Option 2**: LLM generate test case tambahan di area High/Critical
+- **Option 3**: Keduanya
+
+### Step 4 — Curator Review
+```bash
+python src/curator_cli.py
+```
+Review prioritas: Critical → High → Medium → Low
+
+### Step 5 — Generate Report
+```bash
+python src/generate_html_report.py
+```
+Buka `test_report.html` di browser.
+
+---
+
+## Project Structure v2.0
+
+```
 DocQACase/
 │
-├── data/                      # Database storage (auto-generated)
-│   └── docQA_case.db
+├── data/
+│   └── docQA_case.db              # SQLite database
 │
-├── src/                       # Source Code
-│   ├── requirements_data.py   # The "Source of Truth" (Decomposition Table)
-│   ├── setup_db.py            # Database & Schema Initialization
-│   ├── generator_engine.py    # Core Logic (BVA & Dependency Algorithms)
-│   ├── curator_cli.py         # Interactive Review Interface
-│   ├── view_case.py           # Quick Terminal Viewer
-│   └── generate_html_report.py# HTML Report Generator
+├── src/
+│   ├── config.py                  # [BARU] Konfigurasi terpusat
+│   ├── ollama_client.py           # [BARU] Wrapper Ollama API
+│   ├── setup_db.py                # [UPGRADE] Schema + risk columns
+│   ├── llm_intake.py              # [BARU] Raw input → LLM → test cases
+│   ├── risk_engine.py             # [BARU] RBT assess + expand
+│   ├── curator_cli.py             # [UPGRADE] Risk-aware review UI
+│   ├── generate_html_report.py    # [UPGRADE] Risk matrix dashboard
+│   ├── generator_engine.py        # [TETAP] BVA/Flow logic
+│   ├── requirements_data.py       # [TETAP] Manual fallback
+│   └── view_case.py               # [TETAP] Quick viewer
 │
-├── requirements.txt           # Project Dependencies
-└── README.md                  # Documentation
+├── web/                           # Web UI (coming next)
+│   ├── app.py
+│   └── templates/index.html
+│
+├── requirements.txt
+└── README.md
+```
 
-## Installation & Setup
-1. Prerequisites:
-- Python 3.8 or higher.
-- pip (Python Package Installer).
-2. Clone/Download the Repository.
-3. Install Dependencies:
-Bash
-pip install -r requirements.txt
+---
 
+## Database Schema v2.0
 
-## Usage Workflow
-Follow these steps to run the full QA cycle:
+Tabel `test_scenarios` — kolom baru:
 
-Step 1: Initialize Data Warehouse
-Sets up the SQLite database and creates the necessary tables (features, test_scenarios).
-Bash
-python src/setup_db.py
+| Kolom | Tipe | Deskripsi |
+|---|---|---|
+| `risk_level` | TEXT | Critical / High / Medium / Low / Unassessed |
+| `risk_score` | INTEGER | probability × impact (max 25) |
+| `probability_of_failure` | INTEGER | 1–5 |
+| `business_impact` | INTEGER | 1–5 |
+| `risk_reasoning` | TEXT | Penjelasan LLM |
+| `source` | TEXT | manual / bva_engine / llm_intake / llm_rbt |
+| `llm_model` | TEXT | Model Ollama yang digunakan |
 
-Step 2: Generate Test Scenarios
-The engine reads requirements_data.py, applies testing logic (BVA/Flow), and injects data into the DB with a Pending status.
-Bash
-python src/generator_engine.py
+---
 
-Step 3: Curator Review (Human-in-the-Loop)
-Launch the interactive CLI to review high-risk scenarios.
-- A = Approve
-- R = Reject
-- S = Skip
-Bash
-python src/curator_cli.py
+## Troubleshooting
 
-Step 4: Generate Report
-Creates a visual HTML report (test_report.html) summarizing coverage, risks, and approval status.
-Bash
-python src/generate_html_report.py
+**Ollama tidak terdeteksi**
+```
+❌ Ollama tidak bisa diakses di http://localhost:11434
+```
+→ Pastikan `ollama serve` sudah berjalan di terminal lain.
 
+**Timeout**
+```
+⏱️ Timeout setelah 120s
+```
+→ Naikkan `OLLAMA_TIMEOUT` di `config.py`, atau gunakan model yang lebih kecil (misal `gemma3:2b`).
 
-## Core Logic Explained
-The engine uses three specific logic handlers found in generator_engine.py:
-1. Input Validation: Automatically creates Boundary Value Analysis tests (Min, Max, Min-1, Max+1) for fields like Credit Cards or SWIFT codes.
-2. Dependency Logic: Generates "If-This-Then-That" scenarios for features like Discount Stacking or Legal Checkboxes.
-3. Functional Flow: Validates integration paths (e.g., PayPal Redirection) and simulates system failures (Timeouts).
+**Response bukan JSON valid**
+→ Coba model yang lebih kuat (llama3.2 lebih reliable untuk structured output daripada model kecil).

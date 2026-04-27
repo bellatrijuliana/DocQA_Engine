@@ -1,0 +1,98 @@
+Summary,Issue Type,Priority,Labels,Description,Acceptance Criteria,Custom Field (Risk Level),Custom Field (Risk Score),Custom Field (Test Type),Custom Field (Feature)
+[Negative|Boundary|Edge Case] Negative - Invalid Password,Test,Medium,"qa,medium,user-login","*Feature:* user login
+
+*Preconditions:*
+Invalid password (e.g., too short, too long, contains special characters)
+
+*Test Steps:*
+Enter invalid password: password1234
+Click 'Login' button.
+Verify an error message is displayed indicating invalid password.
+Check for appropriate error handling.
+
+*Risk Reasoning:* Password complexity is critical; failure could compromise account security.",An error message is displayed indicating invalid password.,Medium,9,Negative|Boundary|Edge Case,user login
+[Negative|Boundary|Edge Case] Concurrent Login - Attempt to Login with Same Password,Test,Medium,"qa,medium,user-login","*Feature:* user login
+
+*Preconditions:*
+Multiple users attempting to login with the same password.
+
+*Test Steps:*
+Enter password: password123
+Attempt to login with the same password as another user.
+Verify the system prevents login and displays an error.
+Check for appropriate error handling.
+
+*Risk Reasoning:* Potential for security vulnerabilities if duplicate passwords are not handled correctly.",The system prevents login and displays an error message indicating duplicate password.,Medium,9,Negative|Boundary|Edge Case,user login
+[Positive|Negative|Boundary|Edge Case] Positive - Invalid Email Format,Test,Low,"qa,low,user-login","*Feature:* user login
+
+*Preconditions:*
+Invalid email format (e.g., missing @ or domain)
+
+*Test Steps:*
+Enter invalid email address: test@example.com (missing @ or domain)
+Click 'Login' button.
+Verify an error message is displayed indicating invalid email format.
+Check for appropriate error handling.
+
+*Risk Reasoning:* Invalid email format could lead to security vulnerabilities or incorrect user data.",An error message is displayed indicating the email format is invalid.,Low,2,Positive|Negative|Boundary|Edge Case,user login
+[Positive|Negative|Boundary|Edge Case] Positive - Successful Login,Test,Low,"qa,low,user-login","*Feature:* user login
+
+*Preconditions:*
+User is valid, valid email and password.
+
+*Test Steps:*
+Enter valid email address: test@example.com
+Enter valid password: password123
+Click 'Login' button.
+Verify successful login with user profile displayed.
+Check for correct user profile displayed.
+
+*Risk Reasoning:* Successful login is a core functionality; failure could lead to unauthorized access.",User is successfully logged in and redirected to the user's dashboard.,Low,1,Positive|Negative|Boundary|Edge Case,user login
+[Negative|Boundary|Edge Case] Negative - Empty Email,Test,Low,"qa,low,user-login","*Feature:* user login
+
+*Preconditions:*
+Empty email address.
+
+*Test Steps:*
+Enter empty email address:  
+Click 'Login' button.
+Verify an error message is displayed indicating the email is required.
+Check for appropriate error handling.
+
+*Risk Reasoning:* Missing email address is a critical requirement; failure could prevent login.",An error message is displayed indicating the email is required.,Low,1,Negative|Boundary|Edge Case,user login
+[Boundary|Edge Case] Boundary - Minimum Password Length,Test,Low,"qa,low,user-login","*Feature:* user login
+
+*Preconditions:*
+Password length is less than 8 characters.
+
+*Test Steps:*
+Enter minimum password length: 6
+Click 'Login' button.
+Verify the login process is completed successfully.
+Check for appropriate error handling.
+
+*Risk Reasoning:* Ensuring the system handles short passwords gracefully.",Login proceeds successfully with the minimum password length.,Low,1,Boundary|Edge Case,user login
+[Boundary|Edge Case] Boundary - Maximum Password Length,Test,Low,"qa,low,user-login","*Feature:* user login
+
+*Preconditions:*
+Password length is greater than 32 characters.
+
+*Test Steps:*
+Enter maximum password length: 32
+Click 'Login' button.
+Verify the login process is completed successfully.
+Check for appropriate error handling.
+
+*Risk Reasoning:* Ensuring the system handles long passwords gracefully.",Login proceeds successfully with the maximum password length.,Low,1,Boundary|Edge Case,user login
+[Edge Case] Edge Case - Invalid Email Domain,Test,Low,"qa,low,user-login","*Feature:* user login
+
+*Preconditions:*
+Invalid email domain (e.g., missing @)
+
+*Test Steps:*
+Enter invalid email address: test@example.com (missing @)
+Click 'Login' button.
+Verify an error message is displayed indicating invalid email format.
+Check for appropriate error handling.
+
+*Risk Reasoning:* Invalid email domain could lead to incorrect user data.",An error message is displayed indicating invalid email format.,Low,1,Edge Case,user login
